@@ -22,13 +22,18 @@ jobs:
       - run: npm ci
       - run: npm run build:static
 
+      - name: List build output
+        run: |
+          echo "Listing contents of dist/public:"
+          ls -l dist/public
+
       - name: Configure Git for commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v5
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/public
