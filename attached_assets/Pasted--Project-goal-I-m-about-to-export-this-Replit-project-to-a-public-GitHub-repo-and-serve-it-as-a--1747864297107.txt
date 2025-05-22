@@ -1,0 +1,68 @@
+**Project goal**
+I’m about to export this Replit project to a public GitHub repo and serve it as a static site (e.g. via GitHub Pages).
+Before I export, do an optimisation pass so the codebase is minimal, secure, and production-ready.
+
+**Tasks**
+
+1. **Audit the repo**
+
+   * Detect any server-side/Node code (Express handlers, API routes, `server.js`, etc.).
+   * Decide whether the app truly needs a server layer; if all network calls are client-side `fetch`es to external APIs, strip the server code entirely so the build is 100 % static.
+
+2. **Trim dependencies**
+
+   * Scan `package.json` for packages that become unused after the server strip-down (e.g. `express`, `cors`, `dotenv`, heavy crypto libs).
+   * Remove them and update `package-lock.json`.
+   * Add an `env.example` file that lists only the variables the *client* actually needs.
+
+3. **Code clean-up**
+
+   * Run a dead-code elimination (tree-shake) pass: delete unused components, utils, and imports.
+   * Consolidate duplicate helper functions&#x20;
+   * Ensure no secrets, private keys, or hard-coded API tokens remain.
+
+4. **Build / bundle optimisation**
+
+   * Switch the build tool to **Vite** if it isn’t already (faster dev & smaller bundle).
+   * Enable production flags: `vite build --minify`, React 17 JSX runtime, esbuild + terser for js/css minification.
+   * Purge unused Tailwind classes (`@tailwindcss/typography`, `content` paths).
+   * Compress images & SVGs (svgo, imagemin).
+
+5. **Static export check**
+
+   * Generate the final `dist` folder.
+
+   * Add a fallback `404.html` for React-Router/Hash-Router as needed.
+
+6. **GitHub-ready polish**
+
+   * Create/verify: `.gitignore`, `README.md` (explain build & deploy), `LICENSE` (MIT), and an NPM `clean` script.
+   * Add a lightweight GitHub Actions workflow (`build.yml`) that runs `npm ci && npm run build` on push.
+
+7. **Deliverables**
+
+   * A concise changelog / diff summary of what you removed or changed.
+   * The optimised repo ready for “Export to GitHub”.
+   * Clear, one-line local test command (e.g. `npx serve dist`) I can run to confirm everything works before the push.
+
+**Constraints**
+
+* Keep the *dust-redeem* logic intact (components `DustTable`, `RedeemButton`, hooks, and fee calculation helpers).
+* Don’t refactor core business logic—focus on build size, dead code, and deployment sanity.
+* Preserve TypeScript strictness (`"strict": true` in `tsconfig.json`).
+* Target browserslist: `defaults, not IE 11`.
+
+**Output format**
+
+```markdown
+## Optimisation Summary
+– Removed: …  
+– Added: …  
+– Final bundle size: … KB (was … KB)
+
+## Next Steps
+1. …
+2. …
+```
+
+When finished, stop and wait for my review before running any automated export.

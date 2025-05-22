@@ -1,0 +1,67 @@
+Context
+The current <DustTable> component mounts a JavaScript scroll-listener to toggle isSticky.
+Issue:
+
+The summary bar only appears when the viewport reaches the very bottom of the table, then vanishes as soon as you scroll up a few pixels.
+
+When it is visible, the bar spans almost the full screen while the table content is narrower, so the two elements feel disconnected.
+
+Steps to Reproduce
+Load any address with ≥ 10 dust positions (so the page needs to scroll).
+
+Scroll down slowly.
+
+Notice the bar flashes on at the end of the list, then disappears when you scroll up even a little.
+
+Expected
+Sticky bar should remain visible for the entire scroll session once the table’s header leaves the viewport.
+
+Width of the sticky bar should match the table container for visual alignment (desktop & mobile).
+
+Root Cause (probable)
+handleScroll() only checks table bottom vs. viewport height.
+– When the bottom is still visible (tableBottom < viewportHeight) the bar is sticky; otherwise it isn’t.
+– As soon as you scroll up (now tableBottom ≥ viewportHeight) the bar resets to “relative”.
+
+Bar width is hard-coded with w-full when sticky, but the table lives inside a max-w-xl wrapper.
+
+Proposed fix
+Replace JS listener with pure CSS sticky
+
+tsx
+Copy
+Edit
+{/* wrapper div around table & sticky bar */}
+<div className="max-w-4xl mx-auto relative">
+  …table…
+
+  {/* NEW – CSS only */}
+  <div className="sticky bottom-0 bg-white border-t border-gray-200 py-3 px-4
+                  rounded-b-2xl shadow-md">
+    …summary content…
+  </div>
+</div>
+No scroll handler; browser keeps it stuck as soon as its top edge hits bottom:0.
+
+Align widths
+
+Put both the table and the bar inside the same max-w-4xl mx-auto container.
+
+Remove the dynamic inline style width logic.
+
+(Optional) mobile tweak
+
+On small screens you may prefer the bar to be sticky top-0 instead of bottom.
+
+Tailwind: className="sticky bottom-0 sm:top-auto sm:bottom-0" already solves this—keep it.
+
+Acceptance criteria
+ Bar remains on-screen while any part of the table body is off-screen (scroll both up and down).
+
+ Bar width equals table width on desktop (max-w-4xl) and full-width on mobile.
+
+ No JS scroll handler in DustTable.tsx.
+
+ Lighthouse “avoid long tasks” passes (removing listener helps).
+
+Judgement call on sizing: constraining the bar to the same width as the table looks cleaner and keeps the CTA visually grouped, so we’ll narrow the bar rather than widening the table.
