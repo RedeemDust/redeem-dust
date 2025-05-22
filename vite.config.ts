@@ -17,5 +17,6 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    base: "/redeem-dust/", // Set correct base path for GitHub Pages
   },
 });
