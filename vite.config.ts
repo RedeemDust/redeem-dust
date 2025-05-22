@@ -3,9 +3,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  base: "/redeem-dust/", // ✅ move here (top-level)
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -17,6 +16,5 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    base: "/redeem-dust/", // Set correct base path for GitHub Pages
   },
 });
