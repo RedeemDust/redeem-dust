@@ -41,6 +41,7 @@ export default function FAQModal({ open, setOpen, initialSection = "proxy" }: FA
                 <p className="mb-2">Support: <a href="mailto:redeemdust@proton.me" className="text-indigo-600 underline">redeemdust@proton.me</a></p>
                 <p className="mb-2">Tip address (Polygon USDC): <span className="font-mono">0x4745BED9080A47cdf2e8280fD57Dd49237305916</span></p>
                 <p className="mb-2">Open-source on <a href="https://github.com/RedeemDust" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">GitHub</a></p>
+                <p className="mb-2">Watch a <a href="https://www.youtube.com/watch?v=N67NYHbH6hQ" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">video demo</a> of the steps on YouTube.</p>
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="proxy">

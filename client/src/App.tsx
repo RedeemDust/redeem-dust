@@ -131,24 +131,6 @@ function App() {
                 >
                   What is RedeemDust?
                 </button>
-                <button 
-                  onClick={() => openFAQ("proxy")}
-                  className="text-indigo-500 hover:underline"
-                >
-                  What is a proxy Safe?
-                </button>
-                <button 
-                  onClick={() => openFAQ("fee")}
-                  className="text-indigo-500 hover:underline"
-                >
-                  Fee calculation
-                </button>
-                <button 
-                  onClick={() => openFAQ("batch")}
-                  className="text-indigo-500 hover:underline"
-                >
-                  Batch size
-                </button>
                 <a href="mailto:redeemdust@proton.me" className="text-indigo-500 hover:underline">Contact</a>
                 <span className="text-gray-400">|</span>
                 <span className="text-gray-700">Tip: <span className="font-mono">0x4745BED9080A47cdf2e8280fD57Dd49237305916</span></span>
@@ -157,16 +139,34 @@ function App() {
               </div>
             </footer>
           </div>
+
+          {/* Video Demo Section */}
+          <section className="flex flex-col items-center mt-12 mb-6">
+            <div className="w-full max-w-xl">
+              <div className="aspect-video rounded-lg overflow-hidden shadow-lg border border-gray-200">
+                <iframe
+                  width="100%"
+                  height="315"
+                  src="https://www.youtube.com/embed/N67NYHbH6hQ"
+                  title="RedeemDust Demo"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <h2 className="text-lg font-semibold mt-4 text-center">See RedeemDust in Action</h2>
+              <p className="mt-2 text-gray-600 text-sm text-center">Watch this quick video to learn what RedeemDust does and how to use it.</p>
+            </div>
+          </section>
+
+          {/* FAQ Modal */}
+          <FAQModal 
+            open={showFAQ} 
+            setOpen={setShowFAQ}
+            initialSection={faqSection}
+          />
+          <Toaster />
         </div>
-        
-        {/* FAQ Modal */}
-        <FAQModal 
-          open={showFAQ} 
-          setOpen={setShowFAQ}
-          initialSection={faqSection}
-        />
-        
-        <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
   );
